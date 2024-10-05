@@ -15,4 +15,4 @@
           - name: Instalando Playwright
             run: yarn playwright install
           - name: Testes E2E (end-to-end)
-            run: yarn run eze
+            run: yarn run e2e
