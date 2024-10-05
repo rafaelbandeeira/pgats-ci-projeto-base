@@ -1,7 +1,8 @@
 ---
-    name: Execução Manual
+    name: Execução Agendada
     on:
-      workflow_dispatch: null
+      schedule:
+        - cron: '0 8 * * 1'
     jobs:
       e2e-tests:
         runs-on:
@@ -11,7 +12,7 @@
 
           - name: Instalando Yarn
             run: npm install -g yarn
-            
+
           - name: Instalando dependências
             run: yarn
 
