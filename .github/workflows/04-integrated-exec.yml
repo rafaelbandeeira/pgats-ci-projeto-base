@@ -1,44 +1,60 @@
 ---
-    name: Execução Integrada
-    on:
-      workflow_dispatch: null
-    jobs:
+name: Execução Integrada
+on:
+  workflow_dispatch: null
 
-      inspection:
-        runs-on: ubuntu-latest
-        
-        steps:
-          - uses: actions/checkout@v4
+jobs:
+  inspection:
+    runs-on: ubuntu-latest
 
-          - name: Instalando Yarn
-            run: npm install -g yarn
+    steps:
+      - uses: actions/checkout@v4
 
-          - name: Instalando dependências
-            run: yarn
+      - name: Instalando Yarn
+        run: npm install -g yarn
 
-          - name: Padronizacao de Codigo
-            run: yarn lint
+      - name: Instalando dependências
+        run: yarn
 
-      e2e-tests:
-        runs-on:
-          - ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
+      - name: Padronizacao de Codigo
+        run: yarn lint
 
-          - name: Instalando Yarn
-            run: npm install -g yarn
-            
-          - name: Instalando dependências
-            run: yarn
+  
+  unit: 
+    runs-on: ubuntu-latest
 
-          - name: Instalando Playwright
-            run: yarn playwright install
+    steps:
+      - uses: actions/checkout@v4
 
-          - name: Testes E2E (end-to-end)
-            run: yarn run e2e
+      - name: Instalando yarn
+        run: npm install -g yarn
 
-          - uses: actions/upload-artifact@v4
-            if: ${{ !cancelled() }}
-            with:
-                name: relatorio-de-testes
-                path: ./playwright-report  
+      - name: Instalando dependencias
+        run: yarn
+
+      - name: Testes de unidade
+        run: yarn run test
+  
+  e2e-tests:
+    runs-on:
+      - ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalando Yarn
+        run: npm install -g yarn
+
+      - name: Instalando dependências
+        run: yarn
+
+      - name: Instalando Playwright
+        run: yarn playwright install
+
+      - name: Testes E2E (end-to-end)
+        run: yarn run e2e
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: relatorio-de-testes
+          path: ./playwright-report
