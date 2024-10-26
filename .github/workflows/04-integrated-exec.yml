@@ -19,8 +19,7 @@ jobs:
       - name: Padronizacao de Codigo
         run: yarn lint
 
-  
-  unit: 
+  unit:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,7 +33,7 @@ jobs:
 
       - name: Testes de unidade
         run: yarn run test
-  
+
   e2e-tests:
     runs-on:
       - ubuntu-latest
